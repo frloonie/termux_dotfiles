@@ -1,0 +1,55 @@
+# Configuration file for tmux.
+# Written by ayekat on a tiring evening in march 2013.
+
+# Version-specific changes (1.9):
+if-shell "case \"$(tmux -V | cut -d' ' -f2-)\" in (0.*|1.[!9]*) true ;; (*) false ;; esac" 'source "$XDG_CONFIG_HOME"/tmux/pre1.9'
+if-shell "case \"$(tmux -V | cut -d' ' -f2-)\" in (0.*|1.[!9]*) false ;; esac" 'source "$XDG_CONFIG_HOME"/tmux/post1.9'
+
+# Version-specific changes (2.1):
+if-shell "case \"$(tmux -V | cut -d' ' -f2-)\" in (0.*|1.*|2.0|2.0[!0-9]*) true ;; (*) false ;; esac" 'source "$XDG_CONFIG_HOME"/tmux/pre2.1'
+if-shell "case \"$(tmux -V | cut -d' ' -f2-)\" in (0.*|1.*|2.0|2.0[!0-9]*) false ;; esac" 'source "$XDG_CONFIG_HOME"/tmux/post2.1'
+
+# ------------------------------------------------------------------------------
+# LOOK {{{
+
+# Statusline options:
+set-option -g status-left-length 60
+set-option -g status-justify left
+set -g status-fg colour245
+set -g status-bg colour237
+
+# Statusline content (let's get ugly!):
+set-window-option -g status-left '#[fg=colour22,bg=colour148] #h #[fg=colour7,bg=colour240] tmux #[default]'
+set-window-option -g status-right '#[fg=colour7,bg=colour8] ... #[fg=colour8,bg=colour7] %H:%M '
+set-window-option -g window-status-format ' #I #W '
+set-window-option -g window-status-current-format '#[bright,fg=colour148,bg=colour232] #I#[default,fg=colour15,bg=colour232] #W #[default]'
+
+# }}}
+# ------------------------------------------------------------------------------
+# FEEL {{{
+
+# More natural tab selection:
+bind-key -n M-l select-window -n
+bind-key -n M-h select-window -p
+
+# More vim-like window selection:
+bind-key j select-pane -t :.+
+bind-key k select-pane -t :.-
+
+# dev: keybindings for reloading config:
+bind-key r source-file ~/.local/etc/tmux/config \; display-message "Config reloaded..."
+
+# Remove Escape key delay:
+set -sg escape-time 0
+
+# }}}
+# ------------------------------------------------------------------------------
+# BEHAVIOUR {{{
+
+# Listen for activity on all windows:
+set -g bell-action any
+
+# Increase scrollback buffer:
+set-option -g history-limit 10000
+
+# }}}

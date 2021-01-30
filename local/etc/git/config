@@ -1,0 +1,18 @@
+[user]
+	name = frloonie
+	email = frloonie@posteo.net
+[color]
+	status = auto
+	diff = auto
+	branch = auto
+[core]
+	editor = nvim
+	excludesfile = ~/.local/etc/git/ignore
+[commit]
+	verbose = true
+[push]
+	default = simple
+[pull]
+	ff = only
+[merge]
+	tool = vimdiff
